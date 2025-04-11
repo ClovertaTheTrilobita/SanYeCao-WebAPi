@@ -6,7 +6,6 @@ import com.cloverta.webapi.restservice.BiliApi;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -16,12 +15,12 @@ import java.util.*;
 
 @Service
 public class BiliApiService {
-    public static BiliApi getPagesInfo(String bvid) {
+    public BiliApi getPagesInfo(String bvid) {
         List<BiliVid> biliVids = new ArrayList<>();
         HttpURLConnection connection = null;
         InputStream is = null;
         BufferedReader br = null;
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         try {
             //创建连接
             URL url = new URL(String.format("https://api.bilibili.com/x/web-interface/view?bvid=%s", bvid));
@@ -55,7 +54,7 @@ public class BiliApiService {
             String description = data.optString("desc");
 
             JSONArray pages = data.getJSONArray("pages");
-            System.out.println(pages.toString());
+            // System.out.println(pages.toString());
 
             for (int i = 0; i < pages.length(); i++) {
                 JSONObject page = pages.getJSONObject(i);
@@ -101,12 +100,12 @@ public class BiliApiService {
         return null;
     }
 
-    public static List<BiliVid> appendVidUrl(List<BiliVid> biliVids) {
+    public List<BiliVid> appendVidUrl(List<BiliVid> biliVids) {
         for (BiliVid biliVid : biliVids) {
             HttpURLConnection connection = null;
             InputStream is = null;
             BufferedReader br = null;
-            StringBuffer result = new StringBuffer();
+            StringBuilder result = new StringBuilder();
             try {
                 Map<String, String> params = new HashMap<>();
                 params.put("bvid", biliVid.getBvId() );
@@ -138,7 +137,7 @@ public class BiliApiService {
                 }
 
                 String jsonResponse = result.toString();
-                System.out.println(result);
+                // System.out.println(result);
                 JSONObject root = new JSONObject(jsonResponse);
 
                 JSONObject data = root.getJSONObject("data");
@@ -173,7 +172,7 @@ public class BiliApiService {
         return biliVids;
     }
 
-    public static BiliApi generateBiliApi(String status,
+    public BiliApi generateBiliApi(String status,
                                           String bvId,
                                           String name,
                                           String author,
@@ -183,7 +182,7 @@ public class BiliApiService {
         return new BiliApi(status, bvId, name, author, imageUrl, description, data);
     }
 
-    public static void main(String[] args) {
-        System.out.println(getPagesInfo("BV117411r7R1").data().get(0).getUrl());
-    }
+//    public static void main(String[] args) {
+//        System.out.println(getPagesInfo("BV117411r7R1").data().get(0).getUrl());
+//    }
 }
