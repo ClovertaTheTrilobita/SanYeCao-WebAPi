@@ -16,6 +16,9 @@ import java.util.*;
 @Service
 public class BiliApiService {
     public BiliApi getPagesInfo(String bvid) {
+        if (bvid.equals("empty")) {
+            return generateBiliApi("ERROR", "Missing param 'bvid'", null, null, null, null, null, null);
+        }
         List<BiliVid> biliVids = new ArrayList<>();
         HttpURLConnection connection = null;
         InputStream is = null;
@@ -46,7 +49,10 @@ public class BiliApiService {
 
             String jsonResponse = result.toString();
             JSONObject root = new JSONObject(jsonResponse);
-            JSONObject data = root.getJSONObject("data");
+            JSONObject data;
+
+                data = root.getJSONObject("data");
+
             String bvId = data.getString("bvid");
             String name = data.getString("title");
             String author = data.getJSONObject("owner").getString("name");
@@ -73,9 +79,13 @@ public class BiliApiService {
 //                System.out.println(biliVid.getCid());
             }
 
-            return generateBiliApi("OK", bvId, name, author, imageUrl, description, appendVidUrl(biliVids));
+            return generateBiliApi("OK", "success", bvId, name, author, imageUrl, description, appendVidUrl(biliVids));
         } catch (IOException e) {
             e.printStackTrace();
+            return generateBiliApi("ERROR", "Can't access data: api.bilibili.com unreachable. Please contact cloverta@petalmail.com for further support.", null, null, null, null, null, null);
+        }catch (org.json.JSONException e) {
+            e.printStackTrace();
+            return generateBiliApi("ERROR", "Invalid BVId: Please check whether there was a typo or whether the video exists.", null, null, null, null, null, null);
         } finally {
             if (null != br) {
                 try {
@@ -97,7 +107,6 @@ public class BiliApiService {
             }
         }
 
-        return null;
     }
 
     public List<BiliVid> appendVidUrl(List<BiliVid> biliVids) {
@@ -173,13 +182,14 @@ public class BiliApiService {
     }
 
     public BiliApi generateBiliApi(String status,
+                                          String message,
                                           String bvId,
                                           String name,
                                           String author,
                                           String imageUrl,
                                           String description,
                                           List<BiliVid> data) {
-        return new BiliApi(status, bvId, name, author, imageUrl, description, data);
+        return new BiliApi(status, message, bvId, name, author, imageUrl, description, data);
     }
 
 //    public static void main(String[] args) {
