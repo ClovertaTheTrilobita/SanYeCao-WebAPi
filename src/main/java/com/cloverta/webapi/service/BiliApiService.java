@@ -51,7 +51,7 @@ public class BiliApiService {
             JSONObject root = new JSONObject(jsonResponse);
             JSONObject data;
 
-                data = root.getJSONObject("data");
+            data = root.getJSONObject("data");
 
             String bvId = data.getString("bvid");
             String name = data.getString("title");
