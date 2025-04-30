@@ -18,7 +18,7 @@ public class BiliApiController {
     }
 
     @GetMapping("/bili")
-    public BiliApi BiliApi(@RequestParam(value = "bvid", defaultValue = "empty") String bvid) {
+    public BiliApi BiliApi(@RequestParam(value = "bvid") String bvid) {
         return biliApiService.getPagesInfo(bvid);
     }
 }
