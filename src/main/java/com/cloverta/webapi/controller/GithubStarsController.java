@@ -5,10 +5,12 @@ import com.cloverta.webapi.restservice.GithubStars;
 import com.cloverta.webapi.service.GithubStarsService;
 import com.cloverta.webapi.service.GreetingService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/github")
 public class GithubStarsController {
 
     private final GithubStarsService githubStarsService;
@@ -17,7 +19,7 @@ public class GithubStarsController {
         this.githubStarsService = githubStarsService;
     }
 
-    @GetMapping("/github/stars")
+    @GetMapping("/stars")
     public GithubStars getGithubStars(@RequestParam(value = "user", required = true) String user) {
         try {
             return githubStarsService.getGithubStars(user);

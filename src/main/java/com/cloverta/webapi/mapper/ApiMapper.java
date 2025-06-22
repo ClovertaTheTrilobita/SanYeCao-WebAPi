@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface ApiMapper {
 
-    @Select("SELECT * FROM api_list")
+
     List<Api> findAll();
 
 }

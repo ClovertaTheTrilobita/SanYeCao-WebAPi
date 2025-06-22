@@ -14,7 +14,6 @@ public class GreetingController {
 
     private final GreetingService greetingService;
 
-    // 显式声明构造方法（Spring 4.3+ 可省略 @Autowired）
     public GreetingController(GreetingService greetingService) {
         this.greetingService = greetingService;
     }

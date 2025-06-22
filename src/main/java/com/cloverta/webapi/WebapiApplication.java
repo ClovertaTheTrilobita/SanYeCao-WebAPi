@@ -13,6 +13,7 @@ public class WebapiApplication {
     String home(){
         return "Welcome to Cloverta's WebAPI✨, please visit <a href='https://cloverta.top'>https://cloverta.top</a> for more information.";
     }
+
     public static void main(String[] args) {
         SpringApplication.run(WebapiApplication.class, args);
     }
