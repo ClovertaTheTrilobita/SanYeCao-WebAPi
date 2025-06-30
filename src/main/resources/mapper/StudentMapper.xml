@@ -14,4 +14,8 @@
                     #{name}, #{email}, #{phone}
                  )
     </insert>
+
+    <select id="findById" resultType="Student" parameterType="int">
+        SELECT * FROM student WHERE id=#{id};
+    </select>
 </mapper>

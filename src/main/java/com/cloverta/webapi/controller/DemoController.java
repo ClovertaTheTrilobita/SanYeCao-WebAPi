@@ -52,4 +52,9 @@ public class DemoController {
                     ));
         }
     }
+
+    @GetMapping("/search")
+    public List<Student> searchById(@RequestParam int id) {
+        return studentService.findById(id);
+    }
 }

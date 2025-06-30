@@ -29,4 +29,8 @@ public class StudentService {
         studentMapper.insert(student);
         return true;
     }
+
+    public List<Student> findById(int id) {
+        return studentMapper.findById(id);
+    }
 }
