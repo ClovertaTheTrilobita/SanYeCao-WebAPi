@@ -6,4 +6,12 @@
     <select id="findAll" resultType="Student">
         SELECT * FROM student;
     </select>
+
+    <insert id="insert" parameterType="com.cloverta.webapi.model.Student" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student (
+            name, email, phone
+        ) VALUES (
+                    #{name}, #{email}, #{phone}
+                 )
+    </insert>
 </mapper>

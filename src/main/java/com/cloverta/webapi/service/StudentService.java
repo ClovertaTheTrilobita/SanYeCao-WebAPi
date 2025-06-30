@@ -16,4 +16,17 @@ public class StudentService {
     public List<Student> findAll() {
         return studentMapper.findAll();
     }
+
+    public boolean insert(Student student) {
+        if (student == null) {
+            return false;
+        }
+
+        if (student.getName() == null) {
+            return false;
+        }
+
+        studentMapper.insert(student);
+        return true;
+    }
 }
